@@ -1,6 +1,7 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import envFolderPath, { envs } from '@/shared/config/app';
+import { typeormConfig } from '@/shared/config/typeorm/typeorm-config';
 
 export const controllers = [];
 export const imports = [
@@ -9,21 +10,6 @@ export const imports = [
     envFilePath: envFolderPath.folderPath,
     load: [envs],
   }),
-  TypeOrmModule.forRootAsync({
-    imports: [ConfigModule],
-    useFactory: (cfService: ConfigService) => ({
-      type: 'postgres',
-      host: cfService.get('db.host'),
-      port: cfService.get('db.port'),
-      username: cfService.get('db.user'),
-      password: cfService.get('db.pass'),
-      database: cfService.get('db.database'),
-      entities: ['./src/modules/**/entities/*.entity.ts'],
-      migrations: ['./src/modules/typeorm/migrations/*.ts'],
-      migrationsTableName: cfService.get('migrations'),
-      synchronize: true,
-    }),
-    inject: [ConfigService],
-  }),
+  TypeOrmModule.forRoot(typeormConfig.getTypeOrmConfig()[0]),
 ];
 export const providers = [];

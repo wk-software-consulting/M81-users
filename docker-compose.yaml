@@ -5,7 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: m81-api
-    entrypoint: sh -c "npm i && npm run start:dev"
+    entrypoint: sh -c "yarn install --frozen-lockfile && yarn start:dev"
+    environment:
+      - POSTGRES_HOST=m81-db
     env_file:
       - .env
     volumes:

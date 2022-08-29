@@ -1,15 +1,18 @@
-FROM node:16.17.0-alpine
+FROM node:16.14.2-alpine
 
 RUN mkdir -p /app
 
 WORKDIR /app
 
-COPY package.json /app/
+COPY package*.json ./
 
-RUN npm install
+RUN yarn cache clean \
+  rm yarn.lock \
+  rm -rf node_modules \
+  yarn install
 
 COPY . .
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "start:dev" ]
+CMD ["yarn", "start:dev"]
