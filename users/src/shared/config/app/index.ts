@@ -8,6 +8,10 @@ type EnvironmentType = {
     host: string;
     port: number;
   };
+  rmq: {
+    url: string;
+    name: string;
+  };
 };
 
 export const envs = (): EnvironmentType => {
@@ -20,6 +24,10 @@ export const envs = (): EnvironmentType => {
       database: process.env.POSTGRES_DATABASE,
       host: process.env.POSTGRES_HOST,
       port: Number(process.env.POSTGRES_PORT),
+    },
+    rmq: {
+      url: process.env.RMQ_URL,
+      name: process.env.RMQ_NAME,
     },
   };
 };

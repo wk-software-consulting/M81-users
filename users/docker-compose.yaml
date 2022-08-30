@@ -35,7 +35,7 @@ services:
       - m81-db-data:/var/lib/postgresql/data
     networks:
       - m81-net
-
+      
 volumes:
   m81-db-data:
 
