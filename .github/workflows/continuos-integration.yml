@@ -1,11 +1,7 @@
-name: Continuous Integrations
+name: Continuous Integration
 
 on: 
   pull_request:
-    branches:
-      - main
-      - develop
-  push:
     branches:
       - main
       - develop
