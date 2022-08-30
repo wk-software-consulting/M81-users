@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  m81-api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: m81-api
+    entrypoint: sh -c "yarn install --frozen-lockfile && yarn start:dev"
+    environment:
+      - POSTGRES_HOST=m81-db
+    env_file:
+      - .env
+    volumes:
+      - .:/app/
+      - /app/node_modules
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - m81-net
+    depends_on:
+      - m81-db
+
+  m81-db:
+    image: postgres:latest
+    container_name: m81-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - m81-db-data:/var/lib/postgresql/data
+    networks:
+      - m81-net
+
+volumes:
+  m81-db-data:
+
+networks:
+  m81-net:
