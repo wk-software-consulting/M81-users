@@ -21,23 +21,19 @@ services:
       - m81-db
 
   m81-db:
-    image: postgres:latest
+    image: mongo:latest
     container_name: m81-db
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DATABASE}
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      PGDATA: /var/lib/postgresql/data/pgdata
-    ports:
-      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+      MONGODB_URI: ${MONGODB_URI}
     volumes:
-      - m81-db-data:/var/lib/postgresql/data
+      - data:/data/db
+    ports:
+      - ${MONGODB_PORT}:${MONGODB_PORT}
     networks:
       - m81-net
-
+      
 volumes:
-  m81-db-data:
+  data:
 
 networks:
   m81-net:
