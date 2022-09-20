@@ -1,6 +1,8 @@
-import envFolderPath, { envs } from '@/shared/config/app';
+import envFolderPath, { envs } from '@app/shared/config/app';
+import { forwardRef } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AccountModule } from '../account/account.module';
 
 export const controllers = [];
 export const imports = [
@@ -16,5 +18,6 @@ export const imports = [
       uri: config.get<string>('db.url'),
     }),
   }),
+  forwardRef(() => AccountModule),
 ];
 export const providers = [];

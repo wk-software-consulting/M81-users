@@ -9,9 +9,10 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["*"]
+      "@app/*": ["src/*"],
+      "@test/*": ["test/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
