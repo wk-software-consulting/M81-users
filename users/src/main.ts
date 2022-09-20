@@ -1,8 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@/modules/app/app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { ModelNotFoundException } from './shared/filters/model-not-found.exception.filter';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
@@ -22,7 +20,7 @@ async function bootstrap(): Promise<void> {
   );
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  app.useGlobalFilters(new ModelNotFoundException(), new HttpExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   app.listen();
 

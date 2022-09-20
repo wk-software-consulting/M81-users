@@ -1,7 +1,6 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import envFolderPath, { envs } from '@/shared/config/app';
-import { typeormConfig } from '@/shared/config/typeorm/typeorm-config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 export const controllers = [];
 export const imports = [
@@ -10,6 +9,12 @@ export const imports = [
     envFilePath: envFolderPath.folderPath,
     load: [envs],
   }),
-  TypeOrmModule.forRoot(typeormConfig.getTypeOrmConfig()[0]),
+  MongooseModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: async (config: ConfigService) => ({
+      uri: config.get<string>('db.url'),
+    }),
+  }),
 ];
 export const providers = [];
