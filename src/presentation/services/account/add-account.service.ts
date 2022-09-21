@@ -4,7 +4,8 @@ import {
   AddAccountParams,
 } from '@app/domain/usecases/account/add-account';
 import { AccountMongoRepository } from '@app/infra/db/mongodb/account/account-mongo-repository';
-import { ConflictException, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class AddAccountService implements AddAccount {
@@ -18,8 +19,8 @@ export class AddAccountService implements AddAccount {
     } catch (e) {
       this.logger.log(`${JSON.stringify(e)}`);
       if (e.code === 11000)
-        throw new ConflictException(
-          `This account [${e.keyValue.name}] already exists.`,
+        throw new RpcException(
+          `This account ${JSON.stringify(e.keyValue)} already exists.`,
         );
     }
   }
