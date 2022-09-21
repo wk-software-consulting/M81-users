@@ -24,21 +24,22 @@ export class LoginController {
     @Ctx() ctx: RmqContext,
   ): Promise<void> {
     const channel = ctx.getChannelRef();
-    const orginalMessage = ctx.getMessage();
+    const originalMessage = ctx.getMessage();
+
     this.logger.log(`${JSON.stringify(accountDTO)}`);
 
     try {
       await Promise.all([
-        channel.ack(orginalMessage),
         this.addAccountService.add(accountDTO),
+        channel.ack(originalMessage),
       ]);
     } catch (e) {
-      this.logger.log(`${JSON.stringify(e.message)}`);
+      this.logger.log(`${JSON.stringify(e)}`);
       const filterAckError = ackErrors.filter((ackError) =>
         e.message.includes(ackError),
       );
 
-      if (filterAckError.length) await channel.ack(orginalMessage);
+      if (filterAckError.length) await channel.ack(originalMessage);
     }
   }
 }

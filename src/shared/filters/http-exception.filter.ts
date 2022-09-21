@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-@Catch()
+@Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   constructor(private readonly logger = new Logger(HttpExceptionFilter.name)) {}
   catch(exception: HttpException, host: ArgumentsHost) {
