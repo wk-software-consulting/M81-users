@@ -11,15 +11,15 @@ import {
 
 const ackErrors: string[] = ['E11000'];
 
-@Controller('login')
-export class LoginController {
-  private logger = new Logger(LoginController.name);
+@Controller('account')
+export class AccountController {
+  private logger = new Logger(AccountController.name);
   constructor(
     @AddAccountDecorator() private readonly addAccountService: AddAccount,
   ) {}
 
   @MessagePattern('add.account')
-  async handle(
+  async handleAddAccount(
     @Payload() accountDTO: AccountDTO,
     @Ctx() ctx: RmqContext,
   ): Promise<void> {
