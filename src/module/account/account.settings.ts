@@ -3,7 +3,7 @@ import {
   AccountSchema,
 } from '@app/domain/models/account/account';
 import { AccountMongoRepository } from '@app/infra/db/mongodb/account/account-mongo-repository';
-import { LoginController } from '@app/presentation/controllers/login/login/login-controller';
+import { LoginController } from '@app/presentation/controllers/account/login/login-controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AddAccountProvider } from './providers/add-account.provider';
 
