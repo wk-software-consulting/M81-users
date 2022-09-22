@@ -11,8 +11,11 @@ async function bootstrap(): Promise<void> {
       transport: Transport.RMQ,
       options: {
         urls: [process.env.RMQ_URL],
-        noAck: false,
         queue: process.env.RMQ_NAME,
+        queueOptions: {
+          durable: false,
+        },
+        noAck: false,
       },
     },
   );
